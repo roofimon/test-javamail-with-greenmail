@@ -7,6 +7,7 @@ import javax.mail.Transport;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.util.Properties;
 
 /**
  * Created by roof on 11/18/15.
@@ -16,6 +17,7 @@ public class GenericSession {
     protected String password;
     protected String host;
     protected Session session;
+    protected Properties props;
     protected int port = 587;
 
     public void send(MimeMessage message) throws MessagingException {
@@ -49,6 +51,12 @@ public class GenericSession {
             toAddress[i] = new InternetAddress(to[i]);
         }
         return toAddress;
+    }
+
+    public void initProperties() {
+        props = System.getProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.aut", "true");
     }
 
 }

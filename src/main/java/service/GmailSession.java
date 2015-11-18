@@ -1,6 +1,9 @@
 package service;
 
 import javax.mail.Session;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -8,20 +11,13 @@ import java.util.Properties;
  */
 public class GmailSession extends GenericSession {
     public GmailSession() {
-        super.username = "massive.mail3r@gmail.com";
-        super.password = "N0mif00rA";
+        super.username = "*****@gmail.com";
+        super.password = "*****";
         super.host = "smtp.gmail.com";
     }
 
-    public GmailSession invoke() {
-        Properties props = System.getProperties();
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", username);
-        props.put("mail.smtp.password", password);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
-
+    public GmailSession invoke() throws IOException {
+        initProperties();
         session = Session.getDefaultInstance(props);
         return this;
     }
