@@ -15,7 +15,6 @@ public class GreenMailSession extends GenericSession{
         super.password = "N0mif00rA";
         super.port = 3025;
         super.host = "localhost";
-        super.props.put("xxx", "value");
     }
 
 

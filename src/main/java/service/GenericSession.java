@@ -22,6 +22,8 @@ public class GenericSession {
 
     public GenericSession() {
         props = System.getProperties();
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.aut", "true");
     }
 
     public void send(MimeMessage message) throws MessagingException {
@@ -31,37 +33,17 @@ public class GenericSession {
         transport.close();
     }
 
-    public MimeMessage getMimeMessage(String[] to, String subject, String body) throws MessagingException {
+    public MimeMessage getMimeMessage(String to, String subject, String body) throws MessagingException {
         MimeMessage message = new MimeMessage(this.session);
         message.setFrom(new InternetAddress(this.username));
-        messageSetTos(to, message);
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject(subject);
         message.setText(body);
         return message;
     }
 
-    private void messageSetTos(String[] to, MimeMessage message) throws MessagingException {
-        InternetAddress[] toAddress = createRecipientInternetAddress(to);
-
-        for( int i = 0; i < toAddress.length; i++) {
-            message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-        }
-    }
-
-    private InternetAddress[] createRecipientInternetAddress(String[] to) throws AddressException {
-        InternetAddress[] toAddress = new InternetAddress[to.length];
-
-        for( int i = 0; i < to.length; i++ ) {
-            toAddress[i] = new InternetAddress(to[i]);
-        }
-        return toAddress;
-    }
-
     public GenericSession invoke() {
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.aut", "true");
         session = Session.getDefaultInstance(props);
         return this;
     }
-
 }

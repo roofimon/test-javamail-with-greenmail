@@ -12,7 +12,7 @@ import java.util.Properties;
 public class GmailSession extends GenericSession {
     public GmailSession() {
         super();
-        super.username = "roofimon@gmail.com";
+        super.username = "massive.mail3r@gmail.com";
         super.password = "N0mif00rA";
         super.host = "smtp.gmail.com";
     }
