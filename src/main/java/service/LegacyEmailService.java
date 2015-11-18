@@ -5,12 +5,12 @@ import javax.mail.internet.*;
 /**
  * Created by roof on 11/18/15.
  */
-public class LegcyEmailService {
-    private static String USER_NAME = "*****";  // GMail user name (just the part before "@gmail.com")
-    private static String PASSWORD = "********"; // GMail password
-    private static String RECIPIENT = "lizard.bill@myschool.edu";
+public class LegacyEmailService {
+    private static String USER_NAME = "massive.mail3r@gmail.com";  // GMail user name (just the part before "@gmail.com")
+    private static String PASSWORD = "N0mif00rA"; // GMail password
+    private static String RECIPIENT = "roofimon@gmail.com";
 
-    public static void main(String[] args) {
+    public void send(String[] args) {
         String from = USER_NAME;
         String pass = PASSWORD;
         String[] to = { RECIPIENT }; // list of recipient email addresses
@@ -20,7 +20,7 @@ public class LegcyEmailService {
         sendFromGMail(from, pass, to, subject, body);
     }
 
-    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+    private  void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
