@@ -11,15 +11,9 @@ import java.util.Properties;
  */
 public class GmailSession extends GenericSession {
     public GmailSession() {
-        super.username = "*****@gmail.com";
-        super.password = "*****";
+        super();
+        super.username = "roofimon@gmail.com";
+        super.password = "N0mif00rA";
         super.host = "smtp.gmail.com";
     }
-
-    public GmailSession invoke() throws IOException {
-        initProperties();
-        session = Session.getDefaultInstance(props);
-        return this;
-    }
-
 }

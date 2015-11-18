@@ -20,6 +20,10 @@ public class GenericSession {
     protected Properties props;
     protected int port = 587;
 
+    public GenericSession() {
+        props = System.getProperties();
+    }
+
     public void send(MimeMessage message) throws MessagingException {
         Transport transport = session.getTransport("smtp");
         transport.connect(host, port, username, password);
@@ -53,10 +57,11 @@ public class GenericSession {
         return toAddress;
     }
 
-    public void initProperties() {
-        props = System.getProperties();
+    public GenericSession invoke() {
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.aut", "true");
+        session = Session.getDefaultInstance(props);
+        return this;
     }
 
 }

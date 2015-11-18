@@ -21,13 +21,13 @@ public class MailServiceTest {
     private static final int SMTP_TEST_PORT = 3025;
     public GreenMail greenMail;
 
-    //@Test
+    @Test
     public void testSendMailViaHotmailSMTP() {
         GenericSession session = new HotmailSession().invoke();
         MailService mailService = new MailService(session, new TransactionConfirmationEmail());
         mailService.send(RECIPIENT);
     }
-    //@Test
+    @Test
     public void testSendMailViaGmailSMTP() throws IOException {
         GenericSession session = new GmailSession().invoke();
         MailService mailService = new MailService(session, new TransactionConfirmationEmail());
@@ -35,11 +35,16 @@ public class MailServiceTest {
     }
     @Test
     public void testSendMailGreenMailSession() {
+        //Arrange
         greenMail = new GreenMail(new ServerSetup(SMTP_TEST_PORT, null, "smtp"));
         greenMail.start();
         GenericSession session = new GreenMailSession().invoke();
         MailService mailService = new MailService(session, new TransactionConfirmationEmail());
+
+        //Act
         mailService.send(RECIPIENT);
+
+        //Assert
         assertEquals("Your transaction is completed !!!", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
         greenMail.stop();
     }

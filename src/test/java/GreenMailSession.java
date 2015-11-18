@@ -10,17 +10,14 @@ import java.util.Properties;
 public class GreenMailSession extends GenericSession{
 
     public GreenMailSession() {
+        super();
         super.username = "massive.mail3r@gmail.com";
         super.password = "N0mif00rA";
         super.port = 3025;
         super.host = "localhost";
+        super.props.put("xxx", "value");
     }
 
 
-    public GreenMailSession invoke() {
-        initProperties();
-        session = Session.getDefaultInstance(props);
-        return this;
-    }
 
 }
