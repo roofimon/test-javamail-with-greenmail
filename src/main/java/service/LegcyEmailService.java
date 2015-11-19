@@ -10,7 +10,7 @@ public class LegcyEmailService {
     private static String PASSWORD = "********"; // GMail password
     private static String RECIPIENT = "lizard.bill@myschool.edu";
 
-    public static void main(String[] args) {
+    public void send(String[] args) {
         String from = USER_NAME;
         String pass = PASSWORD;
         String[] to = { RECIPIENT }; // list of recipient email addresses
