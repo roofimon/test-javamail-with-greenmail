@@ -7,34 +7,28 @@ import java.util.Properties;
  * Created by roof on 11/19/15.
  */
 public class GmailSession {
-    private String from;
-    private String pass;
-    private String host;
-    private int    port;
+    private SMTPAccount SMTPAccount;
     private Session session;
 
-    public GmailSession(String from, String pass, String host, int port) {
-        this.host = host;
-        this.from = from;
-        this.pass = pass;
-        this.port = port;
+    public GmailSession(SMTPAccount smtpAccount) {
+        this.SMTPAccount = smtpAccount;
         invoke();
     }
 
     public String getFrom(){
-        return this.from;
+        return this.SMTPAccount.from;
     }
 
     public String getPass() {
-        return this.pass;
+        return this.SMTPAccount.pass;
     }
 
     public String getHost() {
-        return host;
+        return SMTPAccount.host;
     }
 
     public int getPort() {
-        return port;
+        return SMTPAccount.port;
     }
 
     public Session getSession() {
@@ -43,11 +37,11 @@ public class GmailSession {
 
     public void invoke() {
         Properties props = System.getProperties();
-        host = "smtp.gmail.com";
+        SMTPAccount.host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
+        props.put("mail.smtp.host", SMTPAccount.host);
+        props.put("mail.smtp.user", SMTPAccount.from);
+        props.put("mail.smtp.password", SMTPAccount.pass);
         props.put("mail.smtp.port", "587");
         props.put("mail.smtp.auth", "true");
         session = Session.getDefaultInstance(props);
