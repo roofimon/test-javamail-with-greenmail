@@ -1,14 +1,13 @@
 package service;
-import java.util.*;
 import javax.mail.*;
 import javax.mail.internet.*;
 /**
  * Created by roof on 11/18/15.
  */
 public class LegcyEmailService {
-    private GmailSession gmailSession;
+    private MailSession gmailSession;
 
-    public void setGmailSession(GmailSession session) {
+    public void setGmailSession(MailSession session) {
         this.gmailSession = session;
     }
 

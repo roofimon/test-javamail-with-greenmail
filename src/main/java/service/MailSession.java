@@ -6,11 +6,11 @@ import java.util.Properties;
 /**
  * Created by roof on 11/19/15.
  */
-public class GmailSession {
+public class MailSession {
     private SMTPAccount SMTPAccount;
     private Session session;
 
-    public GmailSession(SMTPAccount smtpAccount) {
+    public MailSession(SMTPAccount smtpAccount) {
         this.SMTPAccount = smtpAccount;
         invoke();
     }

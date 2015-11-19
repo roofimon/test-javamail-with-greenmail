@@ -4,9 +4,6 @@ import com.icegreen.greenmail.util.ServerSetup;
 import org.junit.Test;
 import service.*;
 
-import javax.mail.MessagingException;
-import java.io.IOException;
-
 import static junit.framework.TestCase.assertEquals;
 
 /**
@@ -19,7 +16,7 @@ public class MailServiceIntegrationTest {
     private String[] RECIPIENT = {"roof@odd-e.co.th", "roofimon@gmail.com"};
     public void sendEmailViaGoogleSMTP() {
         SMTPAccount smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "N0mif00rA", "smtp.gmail.com", 587);
-        GmailSession gmailSession = new GmailSession(smtpAccount);
+        MailSession gmailSession = new MailSession(smtpAccount);
         LegcyEmailService mailService = new LegcyEmailService();
         mailService.setGmailSession(gmailSession);
         mailService.send(RECIPIENT);
@@ -29,7 +26,7 @@ public class MailServiceIntegrationTest {
         greenMail = new GreenMail(new ServerSetup(SMTP_TEST_PORT, null, "smtp"));
         greenMail.start();
         SMTPAccount smtpAccount = new SMTPAccount("fake@greenmail.com", "*******", "localhost", 3025);
-        GmailSession gmailSession = new GmailSession(smtpAccount);
+        MailSession gmailSession = new MailSession(smtpAccount);
         LegcyEmailService mailService = new LegcyEmailService();
         mailService.setGmailSession(gmailSession);
         mailService.send(RECIPIENT);
