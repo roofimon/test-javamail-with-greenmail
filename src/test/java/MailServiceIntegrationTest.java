@@ -9,5 +9,11 @@ import java.io.IOException;
  */
 public class MailServiceIntegrationTest {
     private String[] RECIPIENT = {"roof@odd-e.co.th", "roofimon@gmail.com"};
-
+    @Test
+    public void sendEmailViaGoogleSMTP() {
+        GmailSession gmailSession = new GmailSession("massive.mail3r@gmail.com", "N0mif00rA", "smtp.gmail.com");
+        LegcyEmailService mailService = new LegcyEmailService();
+        mailService.setGmailSession(gmailSession);
+        mailService.send(RECIPIENT);
+    }
 }
