@@ -1,6 +1,12 @@
 package service;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
@@ -15,26 +21,40 @@ public class MailSession {
         invoke();
     }
 
-    public String getFrom(){
-        return this.SMTPAccount.from;
-    }
-
-    public String getPass() {
-        return this.SMTPAccount.pass;
-    }
-
-    public String getHost() {
-        return SMTPAccount.host;
-    }
-
-    public int getPort() {
-        return SMTPAccount.port;
-    }
-
     public Session getSession() {
         return session;
     }
+    public void send(MimeMessage message) throws MessagingException {
+        Transport transport = session.getTransport("smtp");
+        transport.connect(this.SMTPAccount.host, SMTPAccount.port, SMTPAccount.from, SMTPAccount.pass);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
+    }
 
+    public MimeMessage getMimeMessage(String[] to, String subject, String body) throws MessagingException {
+        MimeMessage message = new MimeMessage(session);
+        message.setFrom(new InternetAddress(SMTPAccount.from));
+        InternetAddress[] toAddress = new InternetAddress[to.length];
+        getRecipientInternetAddress(to, toAddress);
+        addRecipientToMessage(message, toAddress);
+        message.setSubject(subject);
+        message.setText(body);
+        return message;
+    }
+
+
+    private static void addRecipientToMessage(MimeMessage message, InternetAddress[] toAddress) throws MessagingException {
+        for( int i = 0; i < toAddress.length; i++) {
+            message.addRecipient(Message.RecipientType.TO, toAddress[i]);
+        }
+    }
+
+    private static void getRecipientInternetAddress(String[] to, InternetAddress[] toAddress) throws AddressException {
+        // To get the array of addresses
+        for( int i = 0; i < to.length; i++ ) {
+            toAddress[i] = new InternetAddress(to[i]);
+        }
+    }
     public void invoke() {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
