@@ -34,27 +34,18 @@ public class MailSession {
     public MimeMessage getMimeMessage(String[] to, String subject, String body) throws MessagingException {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(SMTPAccount.from));
-        InternetAddress[] toAddress = new InternetAddress[to.length];
-        getRecipientInternetAddress(to, toAddress);
-        addRecipientToMessage(message, toAddress);
+        getRecipientInternetAddress(to, message);
         message.setSubject(subject);
         message.setText(body);
         return message;
     }
 
-
-    private static void addRecipientToMessage(MimeMessage message, InternetAddress[] toAddress) throws MessagingException {
-        for( int i = 0; i < toAddress.length; i++) {
-            message.addRecipient(Message.RecipientType.TO, toAddress[i]);
-        }
-    }
-
-    private static void getRecipientInternetAddress(String[] to, InternetAddress[] toAddress) throws AddressException {
-        // To get the array of addresses
+    private void getRecipientInternetAddress(String[] to, MimeMessage message) throws MessagingException {
         for( int i = 0; i < to.length; i++ ) {
-            toAddress[i] = new InternetAddress(to[i]);
+            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to[i]));
         }
     }
+
     public void invoke() {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", "true");
