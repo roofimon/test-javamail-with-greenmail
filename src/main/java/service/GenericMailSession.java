@@ -14,13 +14,8 @@ import java.util.Properties;
  */
 public class GenericMailSession {
     private Session session;
-    private String USER_NAME = "massive.mail3r@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private String PASSWORD = "N0mif00rA"; // GMail password
-    String from = USER_NAME;
-    String pass = PASSWORD;
+    protected SMTPAccount smtpAccount;
     Properties props;
-    String host;
-    int port;
 
     public GenericMailSession() {
         props = System.getProperties();
@@ -28,7 +23,7 @@ public class GenericMailSession {
 
     public MimeMessage createMimeMessage(String to, String subject, String body) throws MessagingException {
         MimeMessage message = new MimeMessage(getSession());
-        message.setFrom(new InternetAddress(from));
+        message.setFrom(new InternetAddress(smtpAccount.username));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to)) ;
         message.setSubject(subject);
         message.setText(body);
@@ -37,19 +32,23 @@ public class GenericMailSession {
 
     public void send(MimeMessage message) throws MessagingException {
         Transport transport = getSession().getTransport("smtp");
-        transport.connect(host, port, from, pass);
+        transport.connect(smtpAccount.host, smtpAccount.port, smtpAccount.username, smtpAccount.password);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
     }
 
     private Session getSession(){
-        props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", host);
-        props.put("mail.smtp.user", from);
-        props.put("mail.smtp.password", pass);
-        props.put("mail.smtp.port", "587");
-        props.put("mail.smtp.auth", "true");
+        assignSMTPConfigurations();
         session = Session.getDefaultInstance(props);
         return session;
+    }
+
+    private void assignSMTPConfigurations() {
+        props.put("mail.smtp.starttls.enable", "true");
+        props.put("mail.smtp.host", smtpAccount.host);
+        props.put("mail.smtp.user", smtpAccount.username);
+        props.put("mail.smtp.password", smtpAccount.password);
+        props.put("mail.smtp.port", "587");
+        props.put("mail.smtp.auth", "true");
     }
 }

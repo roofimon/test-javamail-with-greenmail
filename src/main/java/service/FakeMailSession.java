@@ -6,7 +6,6 @@ package service;
 public class FakeMailSession extends GenericMailSession {
     public FakeMailSession() {
         super();
-        super.host = "localhost";
-        super.port = 3025;
+        super.smtpAccount = new SMTPAccount("", "", "localhost", 3025);
     }
 }

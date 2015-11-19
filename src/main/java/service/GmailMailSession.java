@@ -6,7 +6,6 @@ package service;
 public class GmailMailSession extends GenericMailSession{
     public GmailMailSession() {
         super();
-        super.host = "smtp.gmail.com";
-        super.port = 587;
+        super.smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "N0mif00rA", "smtp.gmail.comt", 587);
     }
 }
