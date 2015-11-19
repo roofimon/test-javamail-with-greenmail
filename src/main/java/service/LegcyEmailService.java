@@ -19,9 +19,10 @@ public class LegcyEmailService {
 
 
         try {
-            MimeMessage message = gmailSession.getMimeMessage(to, subject, body);
-
-            gmailSession.send(message);
+            for( int i = 0; i < to.length; i++ ) {
+                MimeMessage message = gmailSession.getMimeMessage(to[i], subject, body);
+                gmailSession.send(message);
+            }
         }
         catch (AddressException ae) {
             ae.printStackTrace();

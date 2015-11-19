@@ -24,6 +24,7 @@ public class MailSession {
     public Session getSession() {
         return session;
     }
+
     public void send(MimeMessage message) throws MessagingException {
         Transport transport = session.getTransport("smtp");
         transport.connect(this.SMTPAccount.host, SMTPAccount.port, SMTPAccount.from, SMTPAccount.pass);
@@ -31,20 +32,15 @@ public class MailSession {
         transport.close();
     }
 
-    public MimeMessage getMimeMessage(String[] to, String subject, String body) throws MessagingException {
+    public MimeMessage getMimeMessage(String to, String subject, String body) throws MessagingException {
         MimeMessage message = new MimeMessage(session);
         message.setFrom(new InternetAddress(SMTPAccount.from));
-        getRecipientInternetAddress(to, message);
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject(subject);
         message.setText(body);
         return message;
     }
 
-    private void getRecipientInternetAddress(String[] to, MimeMessage message) throws MessagingException {
-        for( int i = 0; i < to.length; i++ ) {
-            message.addRecipient(Message.RecipientType.TO, new InternetAddress(to[i]));
-        }
-    }
 
     public void invoke() {
         Properties props = System.getProperties();
