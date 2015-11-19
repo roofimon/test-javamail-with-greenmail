@@ -16,7 +16,7 @@ public class LegcyEmailService {
     public void send(String[] args) {
         String[] to = args; // list of recipient email addresses
         String subject = "Java send mail example";
-        String body = "Welcome to JavaMail!";
+        String body = "Your transaction is completed !!!";
 
         String from = gmailSession.getFrom();
         String pass = gmailSession.getPass();

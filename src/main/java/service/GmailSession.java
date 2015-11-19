@@ -37,7 +37,6 @@ public class GmailSession {
 
     public void invoke() {
         Properties props = System.getProperties();
-        SMTPAccount.host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", SMTPAccount.host);
         props.put("mail.smtp.user", SMTPAccount.from);
