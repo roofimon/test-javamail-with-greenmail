@@ -1,6 +1,9 @@
 package service;
 
+import javax.mail.MessagingException;
 import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 /**
@@ -8,8 +11,8 @@ import java.util.Properties;
  */
 public class GenericMailSession {
     private Session session;
-    private static String USER_NAME = "massive.mail3r@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private static String PASSWORD = "N0mif00rA"; // GMail password
+    private String USER_NAME = "massive.mail3r@gmail.com";  // GMail user name (just the part before "@gmail.com")
+    private String PASSWORD = "N0mif00rA"; // GMail password
     String from = USER_NAME;
     String pass = PASSWORD;
     Properties props;
@@ -18,6 +21,13 @@ public class GenericMailSession {
 
     public GenericMailSession() {
         props = System.getProperties();
+    }
+
+    public void send(MimeMessage message) throws MessagingException {
+        Transport transport = session.getTransport("smtp");
+        transport.connect(host, port, from, pass);
+        transport.sendMessage(message, message.getAllRecipients());
+        transport.close();
     }
 
     public Session getSession(){

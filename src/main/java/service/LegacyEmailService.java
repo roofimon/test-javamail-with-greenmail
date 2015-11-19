@@ -20,10 +20,6 @@ public class LegacyEmailService {
         String[] to = { RECIPIENT }; // list of recipient email addresses
         String subject = "Java send mail example";
         String body = "Your transaction is completed !!!";
-        sendFromGMail(from, pass, to, subject, body);
-    }
-
-    private  void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
         try {
             MimeMessage message = new MimeMessage(session.getSession());
             message.setFrom(new InternetAddress(from));
@@ -33,10 +29,7 @@ public class LegacyEmailService {
             message.setSubject(subject);
             message.setText(body);
 
-            Transport transport = session.getSession().getTransport("smtp");
-            transport.connect(this.session.host, this.session.port, from, pass);
-            transport.sendMessage(message, message.getAllRecipients());
-            transport.close();
+            session.send(message);
         }
         catch (AddressException ae) {
             ae.printStackTrace();
@@ -45,6 +38,8 @@ public class LegacyEmailService {
             me.printStackTrace();
         }
     }
+
+
 
 
     private void addRecipient(MimeMessage message, InternetAddress[] toAddress) throws MessagingException {
