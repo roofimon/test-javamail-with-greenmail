@@ -21,12 +21,12 @@ public class GenericMailSession {
         props = System.getProperties();
     }
 
-    public MimeMessage createMimeMessage(String to, String subject, String body) throws MessagingException {
+    public MimeMessage createMimeMessage(String to, Email email) throws MessagingException {
         MimeMessage message = new MimeMessage(getSession());
         message.setFrom(new InternetAddress(smtpAccount.username));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to)) ;
-        message.setSubject(subject);
-        message.setText(body);
+        message.setSubject(email.subject);
+        message.setText(email.body);
         return message;
     }
 

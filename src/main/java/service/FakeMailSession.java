@@ -6,6 +6,6 @@ package service;
 public class FakeMailSession extends GenericMailSession {
     public FakeMailSession() {
         super();
-        super.smtpAccount = new SMTPAccount("", "", "localhost", 3025);
+        super.smtpAccount = new SMTPAccount("fake@email.com", "password", "localhost", 3025);
     }
 }

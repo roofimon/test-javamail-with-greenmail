@@ -16,10 +16,11 @@ public class MailServiceIntegrationTest {
     private String[] RECIPIENT = {"roof@odd-e.co.th", "roofimon@gmail.com"};
     private static final int SMTP_TEST_PORT = 3025;
     public GreenMail greenMail;
+    Email email = new TransactionConfirmationEmail();
     public void testSendMailViaLegacy() throws MessagingException {
         GenericMailSession session = new GmailMailSession();
         LegacyEmailService mailService = new LegacyEmailService();
-        mailService.setSession(session);
+        mailService.setSession(session, email);
         mailService.send(RECIPIENT);
     }
 
@@ -29,7 +30,7 @@ public class MailServiceIntegrationTest {
         greenMail.start();
         GenericMailSession session = new FakeMailSession();
         LegacyEmailService mailService = new LegacyEmailService();
-        mailService.setSession(session);
+        mailService.setSession(session, email);
 
         mailService.send(RECIPIENT);
 

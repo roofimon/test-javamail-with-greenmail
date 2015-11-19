@@ -9,18 +9,18 @@ import java.util.List;
  */
 public class LegacyEmailService {
     private GenericMailSession session;
+    private Email email;
 
-    public void setSession(GenericMailSession session) {
+    public void setSession(GenericMailSession session, Email email) {
         this.session = session;
+        this.email = email;
     }
 
     public void send(String[] to) {
         List<String> recipients = Arrays.asList(to);
-        String subject = "Java send mail example";
-        String body = "Your transaction is completed !!!";
         try {
             for( String recipient : recipients ) {
-                MimeMessage message = session.createMimeMessage(recipient, subject, body);
+                MimeMessage message = session.createMimeMessage(recipient, email);
                 session.send(message);
             }
         }
