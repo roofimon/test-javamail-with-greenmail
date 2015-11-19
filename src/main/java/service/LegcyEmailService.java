@@ -6,21 +6,23 @@ import javax.mail.internet.*;
  * Created by roof on 11/18/15.
  */
 public class LegcyEmailService {
-    private String from = "massive.mail3r@gmail.com";  // GMail user name (just the part before "@gmail.com")
-    private String pass = "N0mif00rA"; // GMail password
     private GmailSession gmailSession;
 
     public void setGmailSession(GmailSession session) {
         this.gmailSession = session;
     }
 
+
     public void send(String[] args) {
         String[] to = args; // list of recipient email addresses
         String subject = "Java send mail example";
         String body = "Welcome to JavaMail!";
 
+        String from = gmailSession.getFrom();
+        String pass = gmailSession.getPass();
         Session session = gmailSession.getSession();
         String host = gmailSession.getHost();
+        int port = gmailSession.getPort();
 
         try {
             MimeMessage message = new MimeMessage(session);
@@ -32,7 +34,7 @@ public class LegcyEmailService {
             message.setText(body);
 
             Transport transport = session.getTransport("smtp");
-            transport.connect(host, from, pass);
+            transport.connect(host, port, from, pass);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
         }

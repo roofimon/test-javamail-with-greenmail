@@ -10,17 +10,31 @@ public class GmailSession {
     private String from;
     private String pass;
     private String host;
+    private int    port;
     private Session session;
 
-    public GmailSession(String from, String pass, String host) {
+    public GmailSession(String from, String pass, String host, int port) {
         this.host = host;
         this.from = from;
         this.pass = pass;
+        this.port = port;
         invoke();
+    }
+
+    public String getFrom(){
+        return this.from;
+    }
+
+    public String getPass() {
+        return this.pass;
     }
 
     public String getHost() {
         return host;
+    }
+
+    public int getPort() {
+        return port;
     }
 
     public Session getSession() {
