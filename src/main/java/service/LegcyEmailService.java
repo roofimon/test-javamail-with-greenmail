@@ -1,6 +1,9 @@
 package service;
 import javax.mail.*;
 import javax.mail.internet.*;
+import java.util.Arrays;
+import java.util.List;
+
 /**
  * Created by roof on 11/18/15.
  */
@@ -13,14 +16,14 @@ public class LegcyEmailService {
 
 
     public void send(String[] args) {
-        String[] to = args; // list of recipient email addresses
+        List<String> recipients = Arrays.asList(args); // list of recipient email addresses
         String subject = "Java send mail example";
         String body = "Your transaction is completed !!!";
 
 
         try {
-            for( int i = 0; i < to.length; i++ ) {
-                MimeMessage message = gmailSession.getMimeMessage(to[i], subject, body);
+            for(String recipient: recipients) {
+                MimeMessage message = gmailSession.getMimeMessage(recipient, subject, body);
                 gmailSession.send(message);
             }
         }

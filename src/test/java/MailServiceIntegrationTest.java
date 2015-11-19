@@ -23,13 +23,18 @@ public class MailServiceIntegrationTest {
     }
     @Test
     public void sendEmailViaGreenMailSMTP() {
+        //Arrange
         greenMail = new GreenMail(new ServerSetup(SMTP_TEST_PORT, null, "smtp"));
         greenMail.start();
         SMTPAccount smtpAccount = new SMTPAccount("fake@greenmail.com", "*******", "localhost", 3025);
-        MailSession gmailSession = new MailSession(smtpAccount);
+        MailSession fakeSession = new MailSession(smtpAccount);
         LegcyEmailService mailService = new LegcyEmailService();
-        mailService.setGmailSession(gmailSession);
+        mailService.setGmailSession(fakeSession);
+
+        //Act
         mailService.send(RECIPIENT);
+
+        //Assert
         assertEquals("Your transaction is completed !!!", GreenMailUtil.getBody(greenMail.getReceivedMessages()[0]));
         greenMail.stop();
     }

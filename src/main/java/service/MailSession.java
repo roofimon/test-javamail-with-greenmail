@@ -4,14 +4,10 @@ import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.Transport;
-import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
-/**
- * Created by roof on 11/19/15.
- */
 public class MailSession {
     private SMTPAccount SMTPAccount;
     private Session session;
@@ -20,14 +16,9 @@ public class MailSession {
         this.SMTPAccount = smtpAccount;
         invoke();
     }
-
-    public Session getSession() {
-        return session;
-    }
-
     public void send(MimeMessage message) throws MessagingException {
         Transport transport = session.getTransport("smtp");
-        transport.connect(this.SMTPAccount.host, SMTPAccount.port, SMTPAccount.from, SMTPAccount.pass);
+        transport.connect(SMTPAccount.host, SMTPAccount.port, SMTPAccount.from, SMTPAccount.pass);
         transport.sendMessage(message, message.getAllRecipients());
         transport.close();
     }
@@ -40,7 +31,6 @@ public class MailSession {
         message.setText(body);
         return message;
     }
-
 
     public void invoke() {
         Properties props = System.getProperties();
