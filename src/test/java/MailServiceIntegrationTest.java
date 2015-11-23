@@ -18,7 +18,7 @@ public class MailServiceIntegrationTest {
     @Ignore
     @Test
     public void sendEmailViaGoogleSMTP() {
-        SMTPAccount smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "ukJjCqqDcepg98L", "smtp.gmail.com", 587);
+        SMTPAccount smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "******", "smtp.gmail.com", 587);
         MailSession gmailSession = new MailSession(smtpAccount);
         LegcyEmailService mailService = new LegcyEmailService();
         mailService.setGmailSession(gmailSession);
