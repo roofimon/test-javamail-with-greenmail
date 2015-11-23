@@ -1,6 +1,7 @@
 import com.icegreen.greenmail.util.GreenMail;
 import com.icegreen.greenmail.util.GreenMailUtil;
 import com.icegreen.greenmail.util.ServerSetup;
+import org.junit.Ignore;
 import org.junit.Test;
 import service.*;
 
@@ -14,8 +15,10 @@ public class MailServiceIntegrationTest {
     public GreenMail greenMail;
 
     private String[] RECIPIENT = {"roof@odd-e.co.th", "roofimon@gmail.com"};
+    @Ignore
+    @Test
     public void sendEmailViaGoogleSMTP() {
-        SMTPAccount smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "N0mif00rA", "smtp.gmail.com", 587);
+        SMTPAccount smtpAccount = new SMTPAccount("massive.mail3r@gmail.com", "ukJjCqqDcepg98L", "smtp.gmail.com", 587);
         MailSession gmailSession = new MailSession(smtpAccount);
         LegcyEmailService mailService = new LegcyEmailService();
         mailService.setGmailSession(gmailSession);
